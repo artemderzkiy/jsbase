@@ -13,19 +13,23 @@ var interval = setInterval(function() {
     if (time < 0) {    
         clearInterval(interval);
         alert("Неверная дата!");            
-    } else {            
-        var days = Math.floor(time / 864e5);
+    } else { 
+        var years = Math.floor(time/31536e6);
+        
+        var monthses = Math.floor(time/2592e6)%12;
+
+        var days = Math.floor(time / 864e5)%365;
         var hours = Math.floor(time / 36e5) % 24; 
         var minutes = Math.floor(time / 6e4) % 60;
         var seconds = Math.floor(time / 1e3) % 60;  
-        var digit='<div style="width:70px;text-align:center">'+
+       var digit='<div style="width:70px;float:left;text-align:center">'+
         '<div style="font-size:65px;">';
         var text='</div><div>'
-        var end='</div></div><div style="font-size:45px;">:</div>'
+        var end='</div></div><div style="float:left;font-size:45px;">:</div>'
         document.getElementById('mytimer').innerHTML = '<div>осталось: </div>'+
-        digit+days+text+'Дней'+end+digit+hours+text+'Часов'+end+
+        digit+years+text+'Года'+end+digit+monthses+text+'Месяцев'+end+digit+days+text+'Дней'+end+digit+hours+text+'Часов'+end+
         digit+minutes+text+'Минут'+end+digit+seconds+text+'Секунд';
-        if (!seconds && !minutes && !days && !hours) {              
+        if (!seconds && !minutes && !days && !hours && !years && !monthses) {              
             clearInterval(interval);
             alert("Время вышло!");              
         }           
