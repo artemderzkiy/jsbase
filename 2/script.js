@@ -6,7 +6,10 @@ endYear =  typeof(endYear) != 'undefined' ?  endYear : now.getFullYear();
 endMonth = endMonth ? endMonth - 1 : now.getMonth();   
 endDay = typeof(endDay) != 'undefined' ? endDay :  now.getDate();    
 endHour = typeof(endHour) != 'undefined' ?  endHour : now.getHours();
-endMinute = typeof(endMinute) != 'undefined' ? endMinute : now.getMinutes();    
+endMinute = typeof(endMinute) != 'undefined' ? endMinute : now.getMinutes(); 
+
+
+
 var endDate = new Date(endYear,endMonth,endDay,endHour,endMinute,second+1); 
 var interval = setInterval(function() { 
     var time = endDate.getTime() - now.getTime();
@@ -26,9 +29,17 @@ var interval = setInterval(function() {
         '<div style="font-size:65px;">';
         var text='</div><div>'
         var end='</div></div><div style="float:left;font-size:45px;">:</div>'
+
+        yeartext=declOfNum(Number(years),['год','года','лет']);
+        monthtext=declOfNum(Number(monthses),['месяц','месяца','месяцев']);
+        daytext=declOfNum(Number(days),['день','дня','дней']);
+        hourtext=declOfNum(Number(hours),['час','часа','часов']);
+        minutetext=declOfNum(Number(minutes),['минута','минуты','минут']);
+        secondtext=declOfNum(Number(seconds),['секунда','секунды','секунд']);
+
         document.getElementById('mytimer').innerHTML = '<div>осталось: </div>'+
-        digit+years+text+'Года'+end+digit+monthses+text+'Месяцев'+end+digit+days+text+'Дней'+end+digit+hours+text+'Часов'+end+
-        digit+minutes+text+'Минут'+end+digit+seconds+text+'Секунд';
+        digit+years+text+yeartext+end+digit+monthses+text+monthtext+end+digit+days+text+daytext+end+digit+hours+text+hourtext+end+
+        digit+minutes+text+minutetext+end+digit+seconds+text+secondtext;
         if (!seconds && !minutes && !days && !hours && !years && !monthses) {              
             clearInterval(interval);
             alert("Время вышло!");              
@@ -37,4 +48,10 @@ var interval = setInterval(function() {
     now.setSeconds(now.getSeconds() + 1); 
 }, 1000);
 }
+function declOfNum(number, titles)  
+{  
+    cases = [2, 0, 1, 1, 1, 2];  
+    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+} 
+
 countDown(00,00,00,15,07,2018);   
